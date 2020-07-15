@@ -6,49 +6,127 @@
     <title>serratec-maioridade</title>
 </head>
 <body>
-
+    
+    <div id="container">
+        <h1>Sea Club</h1>
+        <p>+18 only allowed</p>
+        <input type="button" id="start" value="ADD" onclick="maiorIdade()">
+        <input type="button" id="clear" value="CLEAR" onclick="clearInfo()">
+        <h2 class="invisible">Pessoas Permitidas</h2>
+        <div id="allowed"></div>
+        <h2 class="invisible">Pessoas Não permitidas</h2>
+        <div id="disallowed"></div>
+    </div>
+    
     <style>
-        #caixa {
-            padding: 20px;
-            margin: 20px;
-            width: 300px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #container {
+            padding: 40px;
+            width: 100vw;
+            height: 100vh;
             border: 2px solid black;
-            background-color: #999;
+            background-color: steelblue;
             text-shadow: 2px 2px 0px black;
             color: whitesmoke;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+        #start {
+            margin: 50px auto 20px auto;
+            width: 200px;
+            height: 50px;
+            border-radius: 5px;
+            font-size: 25px;
+            color: #666;
+            display: block;
+        }
+        #clear {
+            margin: 20px auto 20px auto;
+            width: 200px;
+            height: 50px;
+            border-radius: 5px;
+            font-size: 25px;
+            color: #666;
+            display: block;
+        }
+        h2 {
+            font-size: 25px;
+            margin: 20px;
+        }
+        #allowed {
+            background-color: green;
+            letter-spacing: 3px;
+        }
+        #disallowed {
+            background-color: red;
+            letter-spacing: 3px;
+        }
+        .invisible {
+            display: none;
+        }
+        .visible {
+            display: block;
         }
     </style>
 
-    <div id="caixa"></div>
-
     <script>
+        let pessoasAllowed = document.getElementById('allowed')
+        let pessoasDisallowed = document.getElementById('disallowed')
+        let invisibleTitle = document.querySelectorAll('.invisible')
+
+        function renderLista (pessoasArray) {
+            if (pessoasArray.length > 0) {
+                    for (let i = 0; i < invisibleTitle.length; i++) {
+                    invisibleTitle[i].className = 'visible'
+                }
+                for (i = 0; i < pessoasArray.length; i++) {
+                    nome = pessoasArray[i].nome
+                    idade = pessoasArray[i].idade
+                    if (idade >= 18  && idade !== 0) {
+                        pessoasAllowed.innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
+                    } else if (idade < 18 && idade !== 0) {
+                        pessoasDisallowed.innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
+                    }
+                    else {
+                        continue
+                    }
+                }            
+            }
+        }
+
+        function clearInfo () {
+            pessoasAllowed.innerHTML = ''
+            pessoasDisallowed.innerHTML = ''
+            for (let i = 0; i < invisibleTitle.length; i++) {
+                invisibleTitle[i].className = 'invisible'
+            }
+        }
+
         function maiorIdade() {
-            var pessoasArray = []
+            let pessoasArray = []
+            let nome = '';
+            let idade = 0;
+            let pessoa = {'nome': '', 'idade': ''}
 
             while (true) {
-                var pessoa = {'nome': '', 'idade': ''}
-                var nome = prompt('Digite um nome (ou SAIR para encerrar): ')
-                if (nome.toUpperCase() != 'SAIR') {
-                    var idade    = parseInt(prompt('Digite a idade: '))
-                    pessoa.nome  = nome
+                nome = prompt('Digite um nome (OK/ENTER para encerrar): ') || ''
+                if (nome != '') {
+                    idade = parseInt(prompt('Digite a idade: ')) || 0
+                    pessoa.nome = nome
                     pessoa.idade = idade
                     pessoasArray.push(pessoa)
                     pessoa = {}
                 } else {
+                    renderLista(pessoasArray)
                     break
                 }
             }
-
-            for (i = 0; i < pessoasArray.length; i++) {
-                nome = pessoasArray[i].nome
-                idade = pessoasArray[i].idade
-                if (idade > 18) {
-                    document.getElementById('caixa').innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
-                }
-            }
-
         }
+
     </script>
 </body>
 </html>
