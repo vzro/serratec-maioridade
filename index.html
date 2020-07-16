@@ -12,9 +12,9 @@
         <p>+18 only allowed</p>
         <input type="button" id="start" value="ADD" onclick="maiorIdade()">
         <input type="button" id="clear" value="CLEAR" onclick="clearInfo()">
-        <h2 class="invisible">Pessoas Permitidas</h2>
+        <h2 class="invisible">numeros Permitidas</h2>
         <div id="allowed"></div>
-        <h2 class="invisible">Pessoas Não permitidas</h2>
+        <h2 class="invisible">numeros Não permitidas</h2>
         <div id="disallowed"></div>
     </div>
     
@@ -76,22 +76,22 @@
     </style>
 
     <script>
-        let pessoasAllowed = document.getElementById('allowed')
-        let pessoasDisallowed = document.getElementById('disallowed')
+        let numerosAllowed = document.getElementById('allowed')
+        let numerosDisallowed = document.getElementById('disallowed')
         let invisibleTitle = document.querySelectorAll('.invisible')
 
-        function renderLista (pessoasArray) {
-            if (pessoasArray.length > 0) {
+        function renderLista (numerosArray) {
+            if (numerosArray.length > 0) {
                     for (let i = 0; i < invisibleTitle.length; i++) {
                     invisibleTitle[i].className = 'visible'
                 }
-                for (i = 0; i < pessoasArray.length; i++) {
-                    nome = pessoasArray[i].nome
-                    idade = pessoasArray[i].idade
+                for (i = 0; i < numerosArray.length; i++) {
+                    nome = numerosArray[i].nome
+                    idade = numerosArray[i].idade
                     if (idade >= 18  && idade !== 0) {
-                        pessoasAllowed.innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
+                        numerosAllowed.innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
                     } else if (idade < 18 && idade !== 0) {
-                        pessoasDisallowed.innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
+                        numerosDisallowed.innerHTML += `<p>Nome: ${nome} | Idade: ${idade}</p>`
                     }
                     else {
                         continue
@@ -101,15 +101,15 @@
         }
 
         function clearInfo () {
-            pessoasAllowed.innerHTML = ''
-            pessoasDisallowed.innerHTML = ''
+            numerosAllowed.innerHTML = ''
+            numerosDisallowed.innerHTML = ''
             for (let i = 0; i < invisibleTitle.length; i++) {
                 invisibleTitle[i].className = 'invisible'
             }
         }
 
-        function maiorIdade() {
-            let pessoasArray = []
+        function maiorNumero() {
+            let numerosArray = []
             let nome = '';
             let idade = 0;
             let pessoa = {'nome': '', 'idade': ''}
@@ -117,13 +117,13 @@
             while (true) {
                 nome = prompt('Digite um nome (OK/ENTER para encerrar): ') || ''
                 if (nome != '') {
-                    idade = parseInt(prompt('Digite a idade: ')) || 0
+                    idade = parseInt(prompt('Digite o numero: ')) || 0
                     pessoa.nome = nome
                     pessoa.idade = idade
-                    pessoasArray.push(pessoa)
+                    numerosArray.push(pessoa)
                     pessoa = {}
                 } else {
-                    renderLista(pessoasArray)
+                    renderLista(numerosArray)
                     break
                 }
             }
